@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>example</title>
+</head>
+<h1 data-a="111">example</h1>
+<input type="button" value="点击事件测试" id="button1">
+<input type="button" value="ajax测试" id="button2">
+<style>.delete { display: none; }</style>
+<ul id=items>
+  <li>List item 1 <span class=delete>DELETE</span></li>
+  <li>List item 2 <span class=delete>DELETE</span></li>
+</ul>
+<input type="checkbox" name="checkbox" checked id="checkbox1"><label for="checkbox1">checkbox1</label>
+<input type="checkbox" name="checkbox" id="checkbox2"><label for="checkbox2">checkbox2</label>
+<input type="button" value="获取选中元素" id="button3">
+<div style="height:300px;" id="div1">hide show</div>
+<input type="button" value="显示隐藏" id="button4">
+<body>
+<script type="text/javascript" src="../dist/spirit.js"></script>
+<script type="text/javascript">
+$(function(){
+    
+    $("#button1").on("click", function(){
+        alert("button click")
+    })
+    $("#button2").on("click", function(){
+        $.ajax({
+            type: 'get',
+            url: 'http://127.0.0.1/aaa',
+            data: {a: 1},
+            success: function(data){
+                console.log('success')
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+    })
+    // show delete buttons on swipe
+    $('#items li').swipe(function(event){
+        console.log(event)
+        $('.delete').hide()
+        $('.delete', this).show()
+    })
+
+    // delete row on tapping delete button
+    $('.delete').tap(function(){
+        $(this).parent('li').remove()
+    })
+    $("#button3").on("tap", function(){
+        alert($("input[type='checkbox']:checked").length)
+    })
+    $("#button4").on("tap", function(){
+        if ($('#div1').css('display') === 'none') {
+            $('#div1').show()
+        } else {
+            $('#div1').hide()
+        }
+        
+    })
+})
+</script> 
+</body>
+</html>

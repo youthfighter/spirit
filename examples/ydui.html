@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YDUI</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link rel="stylesheet" href="../dist/spirit.css"/>
+    <script src="../dist/ydui.flexible.js"></script>
+</head>
+<body>
+<section class="g-flexview">
+    <div class="g-scrollview">
+        <a href="javascript:;" class="btn btn-primary">primary</a>
+        <a href="javascript:;" class="btn btn-danger">danger</a>
+        <a href="javascript:;" class="btn btn-warning">warning</a>
+        <a href="javascript:;" class="btn btn-disabled">disabled</a>
+        <a href="javascript:;" class="btn btn-hollow">hollow</a>
+
+        <div class="m-gridstitle">等分三列</div>
+        <div class="m-grids-3">
+            <a href="#" class="grids-item">
+                <div class="grids-txt"><span>grids-3</span></div>
+            </a>
+            <a href="#" class="grids-item">
+                <div class="grids-txt"><span>grids-3</span></div>
+            </a>
+            <a href="#" class="grids-item">
+                <div class="grids-txt"><span>grids-3</span></div>
+            </a>
+            <a href="#" class="grids-item">
+                <div class="grids-txt"><span>grids-3</span></div>
+            </a>
+            <a href="#" class="grids-item">
+                <div class="grids-txt"><span>grids-3</span></div>
+            </a>
+        </div>
+
+        <div class="m-button">
+            <input type="button" class="btn-block btn-primary" id="J_Confirm" value="Confirm"/>
+            <input type="button" class="btn-block btn-primary" id="J_ConfirmCustom" value="Confirm->Custom"/>
+            <input type="button" class="btn-block btn-hollow" id="J_Alert" value="Alert"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastS" value="Toast->Success"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastE" value="Toast->Error"/>
+            <input type="button" class="btn-block btn-danger" id="J_ToastN" value="Toast->None"/>
+            <input type="button" class="btn-block btn-hollow" id="J_Loading" value="Loading"/>
+            <input type="button" class="btn-block btn-hollow" id="J_Notify" value="Notify"/>
+        </div>
+
+        <div class="m-cell">
+            <div class="cell-item">
+                <div class="cell-left">左边内容一</div>
+                <div class="cell-right">右边内容一</div>
+            </div>
+            <div class="cell-item">
+                <div class="cell-left">左边内容二</div>
+                <div class="cell-right">右边内容二</div>
+            </div>
+        </div>
+
+
+        <div class="m-slider" id="J_Slider">
+            <div class="slider-wrapper">
+                <div class="slider-item">
+                    <a href="#">
+                        <img src="http://static.ydcss.com/uploads/ydui/1.jpg">
+                    </a>
+                </div>
+                <div class="slider-item">
+                    <a href="#">
+                        <img src="http://static.ydcss.com/uploads/ydui/2.jpg">
+                    </a>
+                </div>
+                <div class="slider-item">
+                    <a href="#">
+                        <img src="http://static.ydcss.com/uploads/ydui/3.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class="slider-pagination"></div><!-- 分页标识 -->
+        </div>
+    </div>
+</section>
+<script src="../dist/spirit.js"></script>
+<script>
+    $(function() {
+
+        $('#J_Slider').slider({
+            speed: 200,
+            autoplay: 2000,
+            lazyLoad: true
+        });
+        var dialog = window.YDUI.dialog;
+
+        /* 普通确认框 */
+        $('#J_Confirm').on('click', function () {
+            dialog.confirm('选填标题', '我有一个小毛驴我从来也不骑！', function () {
+                dialog.toast('你点了确定', 'none', 1000);
+            });
+        });
+
+        /* 自定义按钮确认框 */
+        $('#J_ConfirmCustom').on('click', function () {
+            dialog.confirm('自定义按钮', '我有一个小毛驴我从来也不骑！', [
+                {
+                    txt: '取消',
+                    color: false, /* false:黑色  true:绿色 或 使用颜色值 */
+                    callback: function () {
+                        dialog.toast('你点了取消', 'none', 1000);
+                    }
+                },
+                {
+                    txt: '犹豫一下',
+                    stay: true, /* 是否保留提示框 */
+                    color: '#CCC', /* 使用颜色值 */
+                    callback: function () {
+                        dialog.toast('别犹豫了', 'none', 1000);
+                    }
+                },
+                {
+                    txt: '确定',
+                    color: true,
+                    callback: function () {
+                        dialog.toast('你点了确定', 'none', 1000);
+                    }
+                }
+            ]);
+        });
+
+        /* 普通提示框*/
+        $('#J_Alert').on('click', function () {
+            dialog.alert('消息一出，休想滚动屏幕【移动终端】！');
+        });
+
+        /* 正确提示框 */
+        $('#J_ToastS').on('click', function () {
+            dialog.toast('鼠标不错哟！', 'success', 1000);
+        });
+
+        /* 错误提示框 */
+        $('#J_ToastE').on('click', function () {
+            dialog.toast('别乱点啊！', 'error', 1000, function () {
+                dialog.alert('给你一次重来的机会！');
+            });
+        });
+
+        /* 不带图标提示框 */
+        $('#J_ToastN').on('click', function () {
+            dialog.toast('一个没有任何图标的提示！', 'none', 1000);
+        });
+
+        /* 加载中提示框 */
+        $('#J_Loading').on('click', function () {
+            dialog.loading.open('很快加载好了');
+            setTimeout(function () {
+                dialog.loading.close();/* 移除loading */
+            }, 2000);
+        });
+
+        /* 顶部提示框 */
+        $('#J_Notify').on('click', function () {
+            dialog.notify('5秒后自动消失，点我也可以消失！', 5000, function(){
+                console.log('我走咯！');
+            });
+        });
+    });
+</script>
+</body>
+</html>
